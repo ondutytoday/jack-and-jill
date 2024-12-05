@@ -7,16 +7,18 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@Table (name = "judge")
 public class Judge extends Human {
 
     @OneToOne
-    private User user;
+    private Users users;
     @ManyToMany
     @JoinTable(
             name = "JUDGES_TO_COMPETITION",

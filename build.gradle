@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.0'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'org.liquibase.gradle' version '2.1.0' //добавляет плагин для миграции вручную
 }
 
 group = 'org.elena'
@@ -27,13 +28,29 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 //    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.liquibase:liquibase-core'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+//настройка плагина для ручного запуска миграции
+//todo спрятать креды
+liquibase {
+    activities {
+        register("main") {
+            changeLogFile = 'src/main/resources/db/changelog/db.changelog-master.yaml'
+            url = 'jdbc:postgresql://localhost:9432/jack_and_jill'
+            username = 'postgres'
+            password = 'postgres'
+            defaultSchemaName = 'jack'
+        }
+    }
+    runList = ['main']
 }

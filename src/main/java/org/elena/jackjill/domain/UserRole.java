@@ -1,5 +1,6 @@
 package org.elena.jackjill.domain;
 
 public enum UserRole {
-    ADMIN, USER, SUPERADMIN
+    ADMIN, USER, SUPERADMIN, READER
+
 }
