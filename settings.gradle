@@ -1,1 +1,11 @@
 rootProject.name = 'jackjill'
+
+include 'root'
+include 'domain'
+//include 'grpc'
+//include 'auth'
+//include 'entity-hibernate'
+//include 'entity-jooq'
+//include 'python'
+//include 'kotlin'
+

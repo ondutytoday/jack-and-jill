@@ -1,56 +1,45 @@
+//импортируем зависимости которые нужны для работы данного файла gradle
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.0'
     id 'io.spring.dependency-management' version '1.1.6'
-    id 'org.liquibase.gradle' version '2.1.0' //добавляет плагин для миграции вручную
 }
 
-group = 'org.elena'
-version = '0.0.1-SNAPSHOT'
+//применяем ко всем модулям включая этот
+allprojects {
+    group = 'org.elena'
+    version = '0.0.1-SNAPSHOT'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(23)
+    repositories {
+//        mavenLocal()
+        mavenCentral()
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
+//применяем ко всем дочерним модулям
+subprojects {
+    //применяем эти плагины ко всем дочерним проектам
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.postgresql:postgresql'
-    implementation 'org.liquibase:liquibase-core'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-//настройка плагина для ручного запуска миграции
-//todo спрятать креды
-liquibase {
-    activities {
-        register("main") {
-            changeLogFile = 'src/main/resources/db/changelog/db.changelog-master.yaml'
-            url = 'jdbc:postgresql://localhost:9432/jack_and_jill'
-            username = 'postgres'
-            password = 'postgres'
-            defaultSchemaName = 'jack'
+    //если прописано, то не нужно прописывать sourceCompatibility, targetCompatibility
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(23)
         }
     }
-    runList = ['main']
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.36'
+        annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    }
+    //таким образом мы даем возможность имплементить без указания версии в дочерние депенденси
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:3.4.0"
+        }
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
 }
