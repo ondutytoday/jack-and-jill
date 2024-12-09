@@ -1,9 +1,10 @@
 rootProject.name = 'jackjill'
 
 include 'root'
+include 'api'
+include 'auth'
 include 'domain'
 //include 'grpc'
-//include 'auth'
 //include 'entity-hibernate'
 //include 'entity-jooq'
 //include 'python'
