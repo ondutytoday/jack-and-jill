@@ -1,0 +1,9 @@
+plugins {
+    id 'org.springframework.boot' version '3.4.0'
+}
+
+dependencies {
+    implementation project(':jack-and-jill-api')
+    implementation project(':jack-and-jill-auth')
+    implementation project(':jack-and-jill-entity')
+}
