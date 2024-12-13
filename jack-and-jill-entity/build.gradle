@@ -1,0 +1,26 @@
+plugins {
+    //добавляет плагин для миграции вручную
+    id 'org.liquibase.gradle' version '2.1.0'
+}
+
+dependencies {
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.liquibase:liquibase-core'
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+//настройка плагина для ручного запуска миграции
+//todo спрятать креды
+liquibase {
+    activities {
+        register("main") {
+            changeLogFile = 'src/main/resources/db/changelog/db.changelog-master.yaml'
+            url = 'jdbc:postgresql://localhost:9432/jack_and_jill'
+            username = 'postgres'
+            password = 'postgres'
+            defaultSchemaName = 'jack'
+        }
+    }
+    runList = ['main']
+}
