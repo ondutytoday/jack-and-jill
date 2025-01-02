@@ -1,0 +1,14 @@
+plugins {
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "jakarta.validation:jakarta.validation-api:$validationVersion"
+}
+
+test {
+    useJUnitPlatform()
+}

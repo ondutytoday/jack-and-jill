@@ -1,0 +1,17 @@
+plugins {
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':jack-and-jill-dto')
+    implementation project(':jack-and-jill-entity')
+    implementation project(':jack-and-jill-repository')
+    implementation project(':jack-and-jill-security')
+}
+
+test {
+    useJUnitPlatform()
+}

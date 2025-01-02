@@ -15,6 +15,15 @@ allprojects {
     }
 }
 
+ext {
+    set('jwtVersion', '0.12.6')
+    set('springBootVersion', '3.4.0')
+    set('lombokVersion', '1.18.36')
+    set('validationVersion', '3.1.0')
+    set('liquibaseVersion', '1.18.36')
+    set('openApiVersion', '2.7.0')
+}
+
 //применяем ко всем дочерним модулям
 subprojects {
     //применяем эти плагины ко всем дочерним проектам
@@ -29,18 +38,20 @@ subprojects {
     }
 
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter'
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation "org.springframework.boot:spring-boot-starter:$springBootVersion"
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+        implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
 
-        compileOnly 'org.projectlombok:lombok:1.18.36'
-        annotationProcessor 'org.projectlombok:lombok:1.18.36'
+        compileOnly "org.projectlombok:lombok:$lombokVersion"
+        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     }
     //таким образом мы даем возможность имплементить без указания версии в дочерние депенденси
     dependencyManagement {
         imports {
-            mavenBom "org.springframework.boot:spring-boot-dependencies:3.4.0"
+            mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
         }
     }
 

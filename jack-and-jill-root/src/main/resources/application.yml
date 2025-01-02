@@ -24,3 +24,8 @@ app:
     api-description: 'api for jack and jill application'
     contact-name: Elena
     contact-email: email.email.com
+  jwt:
+    security:
+      secret: "secret"
+      header: "Authorization"
+      expiration: 24
