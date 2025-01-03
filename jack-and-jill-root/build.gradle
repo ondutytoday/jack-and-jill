@@ -1,9 +1,14 @@
 plugins {
-    id 'org.springframework.boot' version '3.4.0'
+    id 'org.springframework.boot' version "$springBootVersion"
 }
 
 dependencies {
+    //не уверена что тут нужны прям все модули. проверить
     implementation project(':jack-and-jill-api')
-    implementation project(':jack-and-jill-auth')
+    implementation project(':jack-and-jill-dto')
     implementation project(':jack-and-jill-entity')
+    implementation project(':jack-and-jill-mapper')
+    implementation project(':jack-and-jill-repository')
+    implementation project(':jack-and-jill-security')
+    implementation project(':jack-and-jill-service')
 }

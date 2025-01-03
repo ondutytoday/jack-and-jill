@@ -8,17 +8,23 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@Table(name = "judge")
 @Getter
 @Setter
-@Table (name = "judge")
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Judge extends Human {
 
     @OneToOne
-    private Users users;
+    private User user;
     @ManyToMany
     @JoinTable(
             name = "JUDGES_TO_COMPETITION",

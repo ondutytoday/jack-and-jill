@@ -1,0 +1,14 @@
+plugins {
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':jack-and-jill-entity')
+}
+
+test {
+    useJUnitPlatform()
+}
