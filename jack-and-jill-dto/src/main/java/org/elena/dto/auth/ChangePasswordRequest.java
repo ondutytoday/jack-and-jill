@@ -7,13 +7,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public record ChangePasswordRequest(
-
-        @Schema(description = "Username of the user", example = "john_doe", maxLength = 200, minLength = 1)
-        @NotEmpty
-        @Size(max = 200)
-        @JsonProperty("username")
-        String username,
-
         @Schema(description = "Current password", maxLength = 200, minLength = 1)
         @NotEmpty
         @Size(max = 200)

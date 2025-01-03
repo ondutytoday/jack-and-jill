@@ -3,7 +3,6 @@ package org.elena.service.impl;
 import org.elena.auth.JwtTokenProvider;
 import org.elena.dto.auth.AuthenticationRequest;
 import org.elena.dto.auth.AuthenticationResponse;
-import org.elena.dto.auth.ChangePasswordRequest;
 import org.elena.dto.auth.ForgotPasswordRequest;
 import org.elena.dto.auth.RegisterRequest;
 import org.elena.entity.User;
@@ -63,15 +62,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticationResponse changePassword(ChangePasswordRequest request) {
-        return null;
-    }
-
-    @Override
     @Async
     public void sendEmail(ForgotPasswordRequest request) {
 
     }
-
-
 }
