@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true)
@@ -38,9 +40,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         request.password()
                 )
         );
-        User user = userRepository.findByUsername(request.username()).orElse(userRepository.findByEmail(request.username())
+        User user = userRepository.findByUsername(request.username())
+                .or(() -> userRepository.findByEmail(request.username()))
                 .orElseThrow(() ->
-                        new UsernameNotFoundException(String.format("User %s doesn't exists", request.username()))));
+                        new UsernameNotFoundException(String.format("User %s doesn't exists", request.username())));
         String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole().name());
         return new AuthenticationResponse(token);
     }
@@ -50,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request) {
         User user = User.builder()
                 .username(request.username())
-                .password(request.password())
+                .password(passwordEncoder.encode(request.password()))
                 .email(request.email())
                 .role(getRole(request.role()))
                 .status(Status.ACTIVE)

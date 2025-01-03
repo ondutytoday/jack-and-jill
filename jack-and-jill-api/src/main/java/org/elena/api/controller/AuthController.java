@@ -1,6 +1,7 @@
 package org.elena.api.controller;
 
 import org.elena.dto.auth.AuthenticationRequest;
+import org.elena.dto.auth.AuthenticationResponse;
 import org.elena.dto.auth.ChangePasswordRequest;
 import org.elena.dto.auth.ForgotPasswordRequest;
 import org.elena.dto.auth.RegisterRequest;
@@ -27,7 +28,8 @@ public class AuthController {
     @Operation(summary = "Login")
     @PostMapping(path = "/login")
     public ResponseEntity<?> authenticate(@Valid @RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+        AuthenticationResponse response = authenticationService.authenticate(request);
+        return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Register new user")
