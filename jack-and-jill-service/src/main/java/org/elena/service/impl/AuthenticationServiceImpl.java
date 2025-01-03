@@ -6,10 +6,9 @@ import org.elena.dto.auth.AuthenticationResponse;
 import org.elena.dto.auth.ChangePasswordRequest;
 import org.elena.dto.auth.ForgotPasswordRequest;
 import org.elena.dto.auth.RegisterRequest;
-import org.elena.dto.auth.UserRole;
 import org.elena.entity.User;
-import org.elena.entity.enums.Role;
 import org.elena.entity.enums.Status;
+import org.elena.mapper.UserMapper;
 import org.elena.repository.UserRepository;
 import org.elena.service.AuthenticationService;
 import org.springframework.scheduling.annotation.Async;
@@ -55,7 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .username(request.username())
                 .password(passwordEncoder.encode(request.password()))
                 .email(request.email())
-                .role(getRole(request.role()))
+                .role(UserMapper.INSTANCE.map(request.role()))
                 .status(Status.ACTIVE)
                 .build();
         User savedUser = userRepository.save(user);
@@ -74,10 +73,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
-    private Role getRole(UserRole userRole) {
-        return switch (userRole) {
-            case JUDGE -> Role.USER;
-            case PARTICIPANT -> Role.READER;
-        };
-    }
+
 }

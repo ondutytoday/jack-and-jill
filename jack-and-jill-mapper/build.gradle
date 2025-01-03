@@ -6,11 +6,11 @@ repositories {
 }
 
 dependencies {
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion" //аннотации
+
     implementation project(':jack-and-jill-dto')
     implementation project(':jack-and-jill-entity')
-    implementation project(':jack-and-jill-mapper')
-    implementation project(':jack-and-jill-repository')
-    implementation project(':jack-and-jill-security')
 }
 
 test {

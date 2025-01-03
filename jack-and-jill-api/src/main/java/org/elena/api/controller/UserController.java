@@ -1,5 +1,6 @@
 package org.elena.api.controller;
 
+import org.elena.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,15 +11,19 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/user")
 @Tag(name = "User", description = "The User API")
+@RequiredArgsConstructor
 public class UserController {
+
+    private final UserService userService;
 
     @Operation(summary = "Get user by id")
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> getById(@Parameter @PathVariable("id") @NotNull Long id) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(userService.findById(id));
     }
 }
