@@ -1,6 +1,7 @@
 package org.elena.api.controller;
 
 import org.elena.dto.auth.ChangePasswordRequest;
+import org.elena.dto.auth.ForgotPasswordRequest;
 import org.elena.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +41,13 @@ public class UserController {
             @Valid @RequestBody ChangePasswordRequest request,
             @AuthenticationPrincipal UserDetails userDetails) {
         userService.changePassword(request, userDetails);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "Forgot password")
+    @PostMapping(path = "/forgot-password")
+    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        userService.sendEmail(request);
         return ResponseEntity.ok().build();
     }
 }

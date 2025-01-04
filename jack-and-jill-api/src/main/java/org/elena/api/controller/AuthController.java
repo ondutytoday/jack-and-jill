@@ -2,7 +2,6 @@ package org.elena.api.controller;
 
 import org.elena.dto.auth.AuthenticationRequest;
 import org.elena.dto.auth.AuthenticationResponse;
-import org.elena.dto.auth.ForgotPasswordRequest;
 import org.elena.dto.auth.RegisterRequest;
 import org.elena.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
@@ -35,12 +34,5 @@ public class AuthController {
     @PostMapping(path = "/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
-    }
-
-    @Operation(summary = "Forgot password")
-    @PostMapping(path = "/forgot-password")
-    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
-        authenticationService.sendEmail(request);
-        return ResponseEntity.ok().build();
     }
 }

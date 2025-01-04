@@ -1,7 +1,7 @@
 package org.elena.auth;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.elena.entity.User;
@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -17,8 +18,11 @@ public class SecurityUser implements UserDetails {
 
     private final String username;
     private final String password;
-    private final List<SimpleGrantedAuthority> authorities;
+    @Getter
+    private final String email;
+    @Getter
     private final boolean isActive;
+    private final Set<SimpleGrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -56,12 +60,10 @@ public class SecurityUser implements UserDetails {
     }
 
     public static UserDetails fromUser(User user) {
-        return new org.springframework.security.core.userdetails.User(
+        return new SecurityUser(
                 user.getUsername(),
                 user.getPassword(),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
+                user.getEmail(),
                 user.getStatus().equals(Status.ACTIVE),
                 user.getRole().getPermissions().stream()
                         .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
