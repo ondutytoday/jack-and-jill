@@ -3,15 +3,12 @@ package org.elena.service.impl;
 import org.elena.auth.JwtTokenProvider;
 import org.elena.dto.auth.AuthenticationRequest;
 import org.elena.dto.auth.AuthenticationResponse;
-import org.elena.dto.auth.ChangePasswordRequest;
-import org.elena.dto.auth.ForgotPasswordRequest;
 import org.elena.dto.auth.RegisterRequest;
 import org.elena.entity.User;
 import org.elena.entity.enums.Status;
 import org.elena.mapper.UserMapper;
 import org.elena.repository.UserRepository;
 import org.elena.service.AuthenticationService;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -61,17 +58,4 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String token = jwtTokenProvider.createToken(savedUser.getUsername(), savedUser.getRole().name());
         return new AuthenticationResponse(token);
     }
-
-    @Override
-    public AuthenticationResponse changePassword(ChangePasswordRequest request) {
-        return null;
-    }
-
-    @Override
-    @Async
-    public void sendEmail(ForgotPasswordRequest request) {
-
-    }
-
-
 }
